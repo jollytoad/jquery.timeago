@@ -17,7 +17,7 @@
   $.timeago = function(timestamp) {
     if (timestamp instanceof Date) return inWords(timestamp);
     else if (typeof timestamp == "string") return inWords($.timeago.parse(timestamp));
-    else return inWords($.timeago.parse($(timestamp).attr("title")));
+    else return inWords($.timeago.datetime(timestamp));
   };
   var $t = $.timeago;
 
@@ -78,11 +78,17 @@
       return $.trim([prefix, words, suffix].join(" "));
     },
     parse: function(iso8601) {
-      var s = $.trim(iso8601);
-      s = s.replace(/-/,"/").replace(/-/,"/");
-      s = s.replace(/T/," ").replace(/Z/," UTC");
-      s = s.replace(/([\+-]\d\d)\:?(\d\d)/," $1$2"); // -04:00 -> -0400
-      return new Date(s);
+      return new Date($.trim(iso8601)
+                       .replace(/-/g,"/")
+                       .replace(/\.\d\d\d/, "") // remove milliseconds
+                       .replace(/T/," ")
+                       .replace(/Z/," UTC")
+                       .replace(/([\+-]\d\d)\:?(\d\d)/," $1$2") // -04:00 -> -0400
+                     );
+    },
+    datetime: function(elem) {
+      var that = $(elem);
+      return $t.parse(that.is('time') ? that.attr('datetime') : that.attr('title'));
     }
   });
 
@@ -98,7 +104,7 @@
   };
 
   function refresh() {
-    var date = $t.parse(this.title);
+    var date = $t.datetime(this);
     if (!isNaN(date)) {
       $(this).text(inWords(date));
     }
@@ -117,7 +123,8 @@
     var string = $.isFunction(stringOrFunction) ? stringOrFunction(value) : stringOrFunction;
     return string.replace(/%d/i, value);
   }
-
+ 
   // fix for IE6 suckage
   document.createElement('abbr');
+  document.createElement('time');
 })(jQuery);

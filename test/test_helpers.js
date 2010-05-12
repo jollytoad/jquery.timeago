@@ -10,10 +10,17 @@ var iso8601 = function (date) {
     + ":" + zeropad(date.getUTCSeconds()) + "Z";
 };
 
-jQuery(document).ready(function($) {
+function prepareDynamicDates() {
   $('abbr.loaded').attr("title", iso8601(new Date()));
   $('abbr.modified').attr("title", iso8601(new Date(document.lastModified)));
-});
+}
+
+function loadNumbers() {
+  jQuery.timeago.settings.strings.numbers = ["zero", "one", "two", "three", "four", "five", "six", "seven", "eight", "nine"];
+}
+function unloadNumbers() {
+  jQuery.timeago.settings.strings.numbers = [];
+}
 
 function loadPigLatin() {
   jQuery.timeago.settings.strings = {

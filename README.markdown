@@ -15,7 +15,7 @@ Now, let's attach it to your timestamps on DOM ready:
 
     <pre>
       jQuery(document).ready(function() {
-        jQuery('abbr.timeago').timeago();
+        jQuery("abbr.timeago").timeago();
       });
     </pre>
 
@@ -25,7 +25,7 @@ This will turn all abbr elements with a class of timeago and an ISO 8601 timesta
 
 into something like this:
 
-    <abbr class="timeago" title="2008-07-17T09:24:17Z">about 1 day ago</abbr>
+    <abbr class="timeago" title="July 17, 2008">about 1 day ago</abbr>
 
 As time passes, the timestamps will automatically update.
 
@@ -41,4 +41,4 @@ As time passes, the timestamps will automatically update.
 
 [MIT License](http://www.opensource.org/licenses/mit-license.php)
 
-Copyright (c) 2008-2009, Ryan McGeary (ryanonjavascript -[at]- mcgeary [*dot*] org)
+Copyright (c) 2008-2010, Ryan McGeary (ryanonjavascript -[at]- mcgeary [*dot*] org)

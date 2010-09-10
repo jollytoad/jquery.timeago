@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+<html>
 <head>
   <title>JavaScript unit test file</title>
   <meta http-equiv="content-type" content="text/html; charset=utf-8" />
@@ -7,19 +8,19 @@
   <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js" type="text/javascript"></script>
 
   <!-- http://dev.jquery.com/view/trunk/qunit/testrunner.js -->
-  <script src="testrunner.js" type="text/javascript"></script>
+  <script src="qunit.js" type="text/javascript"></script>
 
   <script src="../jquery.timeago.js" type="text/javascript"></script>
 
   <!-- http://dev.jquery.com/view/trunk/qunit/testsuite.css -->
-  <link rel="stylesheet" href="testsuite.css" type="text/css" media="screen" />
+  <link rel="stylesheet" href="qunit.css" type="text/css" media="screen" />
 </head>
 <body>
-  <h1>jquery.timeago.js tests</h1>
-  <h2 id="banner"></h2>
-  <h2 id="userAgent"></h2>
-
-  <ol id="tests"></ol>
+  <h1 id="qunit-header">jquery-timeago Test Suite</h1>
+  <h2 id="qunit-banner"></h2>
+  <div id="qunit-testrunner-toolbar"></div>
+  <h2 id="qunit-userAgent"></h2>
+  <ol id="qunit-tests"></ol>
 
   <div id="main">
     <h2>Short term</h2>
@@ -70,6 +71,7 @@
     <p>Date only (time element): <time class="timeago" datetime="2008-02-26">(you shouldn't see this)</time>.</p>
     <p>Date only (friendly tooltip): <abbr id="testTooltip" class="timeago" title="2008-02-26">February 26th</abbr>.</p>
     <p>Date only (default tooltip): <abbr id="defaultTooltip" class="timeago" title="2008-02-26"> </abbr>.</p>
+    <p>Timestsamp (with millis): <abbr class="timeago" title="1978-12-18T17:17:00.021Z">(you shouldn't see this)</abbr>.</p>
 
     <h2>Errors</h2>
 
@@ -89,6 +91,8 @@
       <li><abbr id="testParsing5" class="todate" title="1978-12-19T02:17:00+09:00"></abbr> [from +09:00]</li>
       <li><abbr id="testParsing6" class="todate" title="1978-12-19T02:17:00+0900"></abbr> [from +0900]</li>
       <li><abbr id="testParsing7" class="todate" title="1978-12-18 17:17:00"></abbr> [from blank TZ]</li>
+      <li><abbr id="testParsing8" class="todate" title="1978-12-18 17:17:00.021Z"></abbr> [from Z with milliseonds]</li>
+      <li><abbr id="testParsing9" class="todate" title="1978-12-18 17:17:00.021432Z"></abbr> [from Z with microseonds]</li>
     </ul>
 
     <h2>Wording</h2>
@@ -309,6 +313,14 @@
 
       test("From blank TZ", function () {
         ok(($("#testParsing7").html().match(/Mon, 18 Dec 1978 \d\d:17:00 GMT/)), "Correctly parsed, assumed local time");
+      });
+
+      test("From Z with milliseconds", function () {
+        ok(($("#testParsing8").html().match(correctMatch)), "Correctly parsed");
+      });
+
+      test("From Z with microseconds", function () {
+        ok(($("#testParsing9").html().match(correctMatch)), "Correctly parsed");
       });
 
       module("Wording");

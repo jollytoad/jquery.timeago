@@ -100,3 +100,37 @@ function loadYoungOldYears() {
     years: function(value) { return (value < 21) ? "%d young years" : "%d old years"; }
   });
 }
+
+function loadSubstitutionFns() {
+  var single = function(pastWords, futureWords) {
+      return function(number, millis, future) {
+          return [ future ? (futureWords || pastWords) : pastWords ];
+      };
+  };
+  var distant = function(nearWords, pastWords, futureWords) {
+      return function(number, millis, future) {
+          if (number > 10) {
+              return [ future ? (futureWords || pastWords) : pastWords ];
+          } else {
+              return nearWords;
+          }
+      };
+  };
+  jQuery.timeago.settings.strings = {
+    prefixAgo: null,
+    prefixFromNow: null,
+    suffixAgo: "ago",
+    suffixFromNow: "from now",
+    seconds: single("just now"),
+    minute: single("just now"),
+    minutes: single("very recently", "very soon"),
+    hour: single("today"),
+    hours: single("today"),
+    day: single("yesterday", "tomorrow"),
+    days: "%d days",
+    month: "about a month",
+    months: "%d months",
+    year: "about a year",
+    years: distant("%d years", "the distant past", "the distant future")
+  };
+}

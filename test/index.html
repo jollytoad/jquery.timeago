@@ -184,6 +184,24 @@
       <li><abbr id="testMillisSettings7" class="tomillis" title="45"></abbr> [45 sec]</li>
       <li><abbr id="testMillisSettings8" class="tomillis" title="90"></abbr> [90 sec]</li>
       <li><abbr id="testMillisSettings9" class="tomillis" title="120"></abbr> [120 sec]</li>
+
+      <li><abbr id="testSubFnSettings1" class="tosubfn" title="-630720000"></abbr> [-20 years]</li>
+      <li><abbr id="testSubFnSettings2" class="tosubfn" title="-157680000"></abbr> [-5 years]</li>
+      <li><abbr id="testSubFnSettings3" class="tosubfn" title="-90000"></abbr> [-25 hours]</li>
+      <li><abbr id="testSubFnSettings4" class="tosubfn" title="-7200"></abbr> [-2 hours]</li>
+      <li><abbr id="testSubFnSettings5" class="tosubfn" title="-3600"></abbr> [-60 min]</li>
+      <li><abbr id="testSubFnSettings6" class="tosubfn" title="-300"></abbr> [-5 min]</li>
+      <li><abbr id="testSubFnSettings7" class="tosubfn" title="-60"></abbr> [-1 min]</li>
+      <li><abbr id="testSubFnSettings8" class="tosubfn" title="-1"></abbr> [-1 sec]</li>
+      <li><abbr id="testSubFnSettings9" class="tosubfn" title="0"></abbr> [0 sec]</li>
+      <li><abbr id="testSubFnSettings10" class="tosubfn" title="1"></abbr> [1 sec]</li>
+      <li><abbr id="testSubFnSettings11" class="tosubfn" title="60"></abbr> [1 min]</li>
+      <li><abbr id="testSubFnSettings12" class="tosubfn" title="300"></abbr> [5 min]</li>
+      <li><abbr id="testSubFnSettings13" class="tosubfn" title="3600"></abbr> [60 min]</li>
+      <li><abbr id="testSubFnSettings14" class="tosubfn" title="7200"></abbr> [2 hours]</li>
+      <li><abbr id="testSubFnSettings15" class="tosubfn" title="90000"></abbr> [25 hours]</li>
+      <li><abbr id="testSubFnSettings16" class="tosubfn" title="157680000"></abbr> [5 years]</li>
+      <li><abbr id="testSubFnSettings17" class="tosubfn" title="630720000"></abbr> [20 years]</li>
     </ul>
   </div>
 
@@ -239,6 +257,9 @@
 
       loadMillis();
       $("abbr.tomillis").each(toWords);
+
+      loadSubstitutionFns();
+      $("abbr.tosubfn").each(toWords);
 
       module("Valid date");
 
@@ -443,34 +464,47 @@
         ok($("#testLatinSettings5").html().match(/^ess-lay an-thay a-hay inute-may/), "Settings correctly applied");
         ok($("#testRussianSettings5").html().match(/^меньше минуты/), "Settings correctly applied");
         ok($("#testMillisSettings5").html().match(/0 milliseconds/), "Settings correctly applied");
+        ok($("#testSubFnSettings8").html().match(/^just now$/), "Settings correctly applied");
+        ok($("#testSubFnSettings9").html().match(/^just now$/), "Settings correctly applied");
+        ok($("#testSubFnSettings10").html().match(/^just now$/), "Settings correctly applied");
       });
 
       test("minute", function () {
         ok($("#testLatinSettings7").html().match(/^about-hay a-hay inute-may/), "Settings correctly applied");
         ok($("#testRussianSettings7").html().match(/^минуту/), "Settings correctly applied");
         ok($("#testMillisSettings7").html().match(/45000 milliseconds/), "Settings correctly applied");
+        ok($("#testSubFnSettings7").html().match(/^just now$/), "Settings correctly applied");
+        ok($("#testSubFnSettings11").html().match(/^just now$/), "Settings correctly applied");
       });
 
       test("minutes", function () {
         ok($("#testLatinSettings8").html().match(/^2 inutes-may/), "Settings correctly applied");
         ok($("#testRussianSettings8").html().match(/^2 минуты/), "Settings correctly applied");
         // TODO: Test "минута" and "минут"
+        ok($("#testSubFnSettings6").html().match(/^very soon$/), "Settings correctly applied");
+        ok($("#testSubFnSettings12").html().match(/^very recently$/), "Settings correctly applied");
       });
 
       test("hour", function () {
         ok($("#testLatinSettings10").html().match(/^about-hay an-hay hour-hay/), "Settings correctly applied");
         ok($("#testRussianSettings10").html().match(/^час/), "Settings correctly applied");
+        ok($("#testSubFnSettings5").html().match(/^today$/), "Settings correctly applied");
+        ok($("#testSubFnSettings13").html().match(/^today$/), "Settings correctly applied");
       });
 
       test("hours", function () {
         ok($("#testLatinSettings12").html().match(/^about-hay 2 hours-hay/), "Settings correctly applied");
         ok($("#testRussianSettings12").html().match(/^2 часа/), "Settings correctly applied");
         // TODO: Test "час" and "часов"
+        ok($("#testSubFnSettings4").html().match(/^today$/), "Settings correctly applied");
+        ok($("#testSubFnSettings14").html().match(/^today$/), "Settings correctly applied");
       });
 
       test("day", function () {
         ok($("#testLatinSettings15").html().match(/^a-hay ay-day/), "Settings correctly applied");
         ok($("#testRussianSettings15").html().match(/^день/), "Settings correctly applied");
+        ok($("#testSubFnSettings3").html().match(/^tomorrow$/), "Settings correctly applied");
+        ok($("#testSubFnSettings15").html().match(/^yesterday$/), "Settings correctly applied");
       });
 
       test("days", function () {
@@ -502,6 +536,10 @@
         ok($("#testLatinSettings21").html().match(/^3 years-yay/), "Settings correctly applied");
         ok($("#testRussianSettings21").html().match(/^3 года/), "Settings correctly applied");
         // TODO: Test "год" and "лет"
+        ok($("#testSubFnSettings1").html().match(/^the distant future$/), "Settings correctly applied");
+        ok($("#testSubFnSettings2").html().match(/^5 years from now$/), "Settings correctly applied");
+        ok($("#testSubFnSettings16").html().match(/^5 years ago$/), "Settings correctly applied");
+        ok($("#testSubFnSettings17").html().match(/^the distant past$/), "Settings correctly applied");
       });
 
       test("numbers", function () {

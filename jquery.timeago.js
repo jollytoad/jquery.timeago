@@ -52,8 +52,9 @@
       var $l = this.settings.strings;
       var prefix = $l.prefixAgo;
       var suffix = $l.suffixAgo;
+      var future = distanceMillis < 0;
       if (this.settings.allowFuture) {
-        if (distanceMillis < 0) {
+        if (future) {
           prefix = $l.prefixFromNow;
           suffix = $l.suffixFromNow;
         }
@@ -67,12 +68,16 @@
       var years = days / 365;
 
       function substitute(stringOrFunction, number) {
-        var string = $.isFunction(stringOrFunction) ? stringOrFunction(number, distanceMillis) : stringOrFunction;
+        var result = $.isFunction(stringOrFunction) ? stringOrFunction(number, distanceMillis, future) : stringOrFunction;
         var value = ($l.numbers && $l.numbers[number]) || number;
-        return string.replace(/%d/i, value);
+        if (result.join) {
+            return $.map(result, function(str) { return str.replace(/%d/i, value); }).join(" ");
+        } else {
+            return $.trim([prefix, result.replace(/%d/i, value), suffix].join(" "));
+        }
       }
 
-      var words = seconds < 45 && substitute($l.seconds, Math.round(seconds)) ||
+      return seconds < 45 && substitute($l.seconds, Math.round(seconds)) ||
         seconds < 90 && substitute($l.minute, 1) ||
         minutes < 45 && substitute($l.minutes, Math.round(minutes)) ||
         minutes < 90 && substitute($l.hour, 1) ||
@@ -83,8 +88,6 @@
         days < 365 && substitute($l.months, Math.floor(days / 30)) ||
         years < 2 && substitute($l.year, 1) ||
         substitute($l.years, Math.floor(years));
-
-      return $.trim([prefix, words, suffix].join(" "));
     },
     parse: function(iso8601) {
       var s = $.trim(iso8601);
